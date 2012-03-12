@@ -76,14 +76,14 @@
             <ul class="nav nav-list">
 
               <li class="nav-header">Introduction</li>
-              <li class="active"><a href="index.html">Abstract</a></li>
+              <li><a href="index.html">Abstract</a></li>
               <li><a href="goals.html">Goals</a></li>
               <li><a href="system.html">System Overview</a></li>
               <li><a href="applications.html">Applications</a></li>
 
               <li class="nav-header">System Architecture</li>
               <li><a href="naming.html">Naming</a></li>
-              <li><a href="access.html">Access Control</a></li>
+              <li class="active"><a href="access.html">Access Control</a></li>
               <li><a href="data.html">Data Location and Routing</a></li>
               <li><a href="update.html">Update Model</a></li>
 
@@ -103,13 +103,31 @@
    
       <div class="span9">
 		<!-- Accordion -->
-		<h2 class="demoHeaders">Abstract</h2>
+		<h2 class="demoHeaders">Access Control</h2>
 		<div id="accordion">
 			<div>
-				<h3><a href="#">Purpose</a></h3>
-				<div>Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet.</div>
+				<h3><a href="#">Reader Restriction</a></h3>
+				<div>
+                    <ul>
+                        <li>prevents unauthorized reads</li>
+                        <li>encrypt data and distribute key to users with read permission</li>
+                        <li>instead of revoking privilege, re-encypt data with new key and redistribute</li>
+                    </ul>
+                </div>
 			</div>
+       
+            <div>            
+                <h3><a href="#">Writer Restriction</a></h3>
+                <div>
+                    <ul>
+                        <li>all writes are signed and verified by an ACL</li>
+                        <li>these lists provide permissions for users depending on the object</li>
+                    </ul>
+                </div>
+            </div>
 		</div>
+
+
         </div><!--/span-->
       </div><!--/row-->
 

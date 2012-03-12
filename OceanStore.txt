@@ -1,0 +1,95 @@
+OceanStore
+
+ - An application based on Tapestry. It's distributed storage utility on PlanetLab. 
+
+OceanStore is a global-scale persistent data store. It provides a consistent, highly-available, and durable storage utility atop an infrastructure comprised of untrusted servers. OceanStore is developed at the University of California at Berkeley. You can find our publications and information about the developers at our local website, http://oceanstore.cs.berkeley.edu. 
+
+OceanStore is a global persistent data store designed to scale to billions of users. It provides a consistent, highly-available, and durable storage utility atop an infrastructure comprised of untrusted servers.
+
+Any computer can join the infrastructure, contributing storage or providing local user access in exchange for economic compensation. Users need only subscribe to a single OceanStore service provider, although they may consume storage and bandwidth from many different providers. The providers automatically buy and sell capacity and coverage among themselves, transparently to the users. The utility model thus combines the resources from federated systems to provide a quality of service higher than that achievable by any single company.
+
+OceanStore caches data promiscuously; any server may create a local replica of any data object. These local replicas provide faster access and robustness to network partitions. They also reduce network congestion by localizing access traffic.
+
+We must assume that any server in the infrastructure may crash, leak information, or become compromised. Promiscuous caching therefore requires redundancy and cryptographic techniques to protect the data from the servers upon which it resides.
+
+OceanStore employs a Byzantine-fault tolerant commit protocol to provide strong consistency across replicas. The OceanStore API also allows applications to weaken their consistency restrictions in exchange for higher performance and availability.
+
+A version-based archival storage system provides durability which exceeds today's best by orders of magnitude. OceanStore stores each version of a data object in a permanent, read-only form, which is encoded with an erasure code and spread over hundreds or thousands of servers. A small subset of the encoded fragments are sufficient to reconstruct the archived object; only a global-scale disaster could disable enough machines to destroy the archived object.
+
+The OceanStore introspection layer adapts the system to improve performance and fault tolerance. Internal event monitors collect and analyze information such as usage patterns, network activity, and resource availability. OceanStore can then adapt to regional outages and denial of service attacks, pro-actively migrate data towards areas of use and maintain sufficiently high levels of data redundancy.
+
+Many components of OceanStore are already functioning in isolation. A complete prototype is currently under development. 
+
+
+
+Reading Notes
+
+Purpose
+
+Main Goals
+
+System Overview
+
+Applications
+    Problems
+    Groupware
+    Personal Information
+    Email
+    Digital Libraries
+
+System Architecture
+    Naming
+        GUID - globally unique identifier
+            pseudo random, fixed length bit string
+            self certifying path names due to Mazieres //transparent encryption of communications as well as authorization 
+            the GUID is the secure hash of the owner's key and some human-readable name
+            this allows server to verify object's owner
+
+    Access Control
+        Reader Restriction
+            To preven unauthorized reads, encrypt data in the system that is not entirely public and distribute the encryption key to those users with read permission. To revoke this permission, owner must request that replicas be deleted or re-encrypted with the new key (this would clearly be more secure because readers can cache/store the key if simply "revoked")
+
+        Writer Restriction
+            All writes are required to be signed so that servers and clients can verify them against an Access Control List (ACL). These lists provide permissions of what permissions to give users depending on the object. So for object foo use ACL x and its corresponding permissions. 
+            An ACL entry extending privileges must describe the privilege granted and the signing key, but not the explicit ID of the privileged user. So object oriented access control not dependent on user. 
+
+Data Location and Roaming
+    Distributed Routing in OceanStore
+        Every entity in OceanStore is IDed by 1+ GUIDs and clients interact with these via a series of protocol messages.
+        OceanStore messages are labeled with a dest GUID, random number, and a small predicate. 
+        The role of routing is to route messages to the closest node that matches the predicate and has the desired GUID. It does this using an object location data structure. 
+        The distributed data structure explicitly tracks the location of all objects and is a two phase process. Messages begin by routing from node to node along the distributed data structure until a destination is discovered. At this point they route directly to the destination. 
+        What are the advantages? The task of routing is handled by the aggregate resources of many nodes instead of a server. By exploiting multiple routing paths to the destination, this serves to limit the power of compromised nodes to deny service to a client. Second, message route directly to their destination avoiding the multiple round trips that a separate data location and routing proecss would incur. Finally, the infrastructure has more updated information about the current location of entities than the client. 
+
+        Two-tiered approach - fast, probabilistic algorithim backed up by a slower, reliable, hierarchical method. 
+
+    Attenuated Bloom Filters
+        Bloom filter us a recird if the objects contained locally on the current node. An attenuated bloom filter is stored for each directed edge in the network. A query is routed along the edge whose filter indicates the presence of an object at the smallest distance. 
+
+    The Global Algorithm
+    -Variation on Plaxton's randomized hierarchical distributed data structure. 
+    Uses a highly-redundant version of this struct.
+    Every server in the system is assigned a random unique ID and these are used to construct a mesh of neighbor links. 
+    Each ID is chunked into 4 bits and the Nth level neighbor links for some node X point at the 16 closest neighbors whose node IDs match the lowers N-1 nibbles of the Node X's ID and who have different combinations of the Nth nidbble. 
+    If there is no link then still uses closest to protocol. 
+    Nice load distribution because GUIDs become randomly mapped throughout the infrastructure
+
+        Achieving Fault Tolerance
+            OceanStore hashes each GUID with a smal number of different salt values. The result maps to several different root nodes so there is no single point of failure. Gains redundancy and makes more resistant to DoS attacks. 
+
+        The Advantages of Distributed Information
+            Highly redundant and fault tolerant means data location load is spread evenly while finding local objects quickly. 
+            Probabilistic combined with global algorithm scales well to millions of servers. 
+            Aggregate information contained in the data struct is enough to recognize when servers are down and data that should be reconstructed when a server is removed. This is good for minimizing redundancy for deep archival storage. 
+
+        Achieving Maintenance-Free Operation
+            Recursive node insertion and removal algorithms
+            These make use of the redundant neighbor links
+            generalized publication algorithm to support replication roots, which removes single points of failure 
+            Optimized failure nodes by using a soft-state beacon to detect faults more quickly, TTL fields react better to routing updates, and a second chance algorithm to minimize cost of recovering lost nodes. 
+            This info coupled with repair mechanisms that recognize down servers.
+            I.e. OceanStore infrastructure as a whole automatically adapts to the presence of absence of particular servers without human intervention, which greatly reduces the cost of management. 
+
+Update Model 
+    
+

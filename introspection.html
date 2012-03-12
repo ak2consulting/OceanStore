@@ -84,13 +84,13 @@
               <li class="nav-header">System Architecture</li>
               <li><a href="naming.html">Naming</a></li>
               <li><a href="access.html">Access Control</a></li>
-              <li class="active"><a href="data.html">Data Location and Routing</a></li>
+              <li><a href="data.html">Data Location and Routing</a></li>
               <li><a href="update.html">Update Model</a></li>
 
               <li><a href="archives.html">Deep Archival Storage</a></li>
               <li><a href="api.html">API</a></li>
 
-              <li><a href="introspection.html">Introspection</a></li>
+              <li class="active"><a href="introspection.html">Introspection</a></li>
 
               <li class="nav-header">Conclusion</li>
               <li><a href="status.html">Status</a></li>
@@ -103,59 +103,56 @@
    
       <div class="span9">
 		<!-- Accordion -->
-		<h2 class="demoHeaders">Data Location and Routing</h2>
+		<h2 class="demoHeaders">Introspection</h2>
 		<div id="accordion">
 			<div>
-				<h3><a href="#">Distributed Routing</a></h3>
+				<h3><a href="#">Definition</a></h3>
 				<div>
                     <ul>
-                        <li>every entity is associated with 1+ GUID and clients interact with these via protocol msgs</li>
-                        <li>they are labeled with dest GUID, random number, and a small predicate</li>
-                        <li>they are routed to the closest node that matches the predicate and has the desired GUID</li>
-                        <li>this is done through an object location data structure</li>
-                        <li>the data structure explicitly tracks the location of all objects</li>
-                        <li>the query algorithm uses a two tiered approach: 1) a fast probabilistic algorithm, and 2) a slower, reliable, hierarchical algorithm</li>
-
+                        <li>An architectural paradigm that mimics biological adaptation</li>
+                        <li>It augments a system's normal operation with observation and optimization</li>
+                        <li>Observation modules for monitoring</li>
+                        <li>Optimization modules use resulting observation to adapt the computation</li>
                     </ul>
                 </div>
 			</div>
        
             <div>            
-                <h3><a href="#">Bloom Filters</a></h3>
+                <h3><a href="#">Architecture Design</a></h3>
                 <div>
                     <ul>
-                        <li>a bloom filter is a record of objects contained locally on the current node</li>
-                        <li>an attenuated bloom filter is stored as well for each directed edge in the network giving nodes an idea of what objects are located with their neighbors to some degree of depth</li>
-                        <img src="img/ocean_query.jpg" alt="" />
-                        <li>the probabilistic algorithm uses these filters to route the query to the most likely path on which the object will be found</li>
+                        <li>Process local events</li>
+                        <li>Forward summaries to distributed hierarchy to form approximate global views of the system</li>
+                        <li>A level of fast handlers summarizes local events</li>
+                        <li>Summaries are stored in local database</li>
+                        <img src="img/architecture.jpg" alt="" />
                     </ul>
                 </div>
             </div>
 
 
             <div>            
-                <h3><a href="#">Global Algorithm</a></h3>
+                <h3><a href="#">Other Uses: Cluster Recognition</a></h3>
                 <div>
                     <ul>
-                        <li>every server in the system is assigned a random unique ID and tehse are used to construct a mesh of neighbor links</li>
-                        <img src="img/ocean_global.jpg" alt="" />
-                        <li>each ID is chunked into 4 bits and the neighbor links point at the 16 closest neighbors whose IDs match the bits as best as possible</li>
-                        <li>these IDs are randomly distributed throughout the infrastructure for load balancing purposes</li>
-                        <li>in contrast to the probabilistic algorithm this search is exhaustive</li>
+                        <li>Attempts to identify and group closely related files</li>
+                        <li>Each client machine contains event handler triggered by each data object accesses</li>
+                        <li>Event handler incrementally constructs a graph representing semantic distance among data objects</li>
+                        <li>Process periodically runs clustering algorithm</li>
+                        <li>Helps remote optimization modules collocate and prefetch related files</li>
                     </ul>
                 </div>
             </div>
 
 
             <div>            
-                <h3><a href="#">Advantages</a></h3>
+                <h3><a href="#">Other Uses: Replica Managment</a></h3>
                 <div>
                     <ul>
-                        <li>fault tolerance: OceanStore hashes each GUID with a small number of different salt values. This means that there is more than one entry point for queries and thus no single point of failure.</li>
-                        <li>distributed information: this emphasis on high redundancy makes OceanStore more resistant to DoS attacks</li>
-                        <li>the two-tiered algorithm scales well to millions of servers</li>
-                        <li>maintenance-free operation: optimized failure recover by using a soft-state beacon to detect faults more quickly, TTL fields react better to routing updates, and a second chance algorithm to minimize the cost of recovering a lost node.</li>
-                        <li>the whole infrastructure automatically adapts to the presence or absence of a particular server without human intervention</li>
+                        <li>Adjusts the number and location of floating replicas for better service</li>
+                        <li>Event handler monitors client behavior</li>
+                        <li>More requests, more replicas</li>
+                        <li>Less requests, replica destruction</li>
                     </ul>
                 </div>
             </div>

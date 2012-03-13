@@ -76,7 +76,7 @@
             <ul class="nav nav-list">
 
               <li class="nav-header">Introduction</li>
-              <li class="active"><a href="index.html">Abstract</a></li>
+              <li><a href="index.html">Abstract</a></li>
               <li><a href="goals.html">Goals</a></li>
               <li><a href="system.html">System Overview</a></li>
               <li><a href="applications.html">Applications</a></li>
@@ -85,7 +85,7 @@
               <li><a href="naming.html">Naming</a></li>
               <li><a href="access.html">Access Control</a></li>
               <li><a href="data.html">Data Location and Routing</a></li>
-              <li><a href="update.html">Update Model</a></li>
+              <li class="update"><a href="update.html">Update Model</a></li>
 
               <li><a href="archives.html">Deep Archival Storage</a></li>
               <li><a href="api.html">API</a></li>
@@ -103,25 +103,60 @@
    
       <div class="span9">
 		<!-- Accordion -->
-		<h2 class="demoHeaders">Abstract</h2>
+		<h2 class="demoHeaders">Update Model</h2>
 		<div id="accordion">
 			<div>
-				<h3><a href="#">Purpose</a></h3>
+				<h3><a href="#">Overview</a></h3>
 				<div>
                     <ul>
-                        <li>Inspiration of technology is to achieve more transparency</li>
-                        <li>Persistent information permits the behavior of devices to be independent of the devices themselves.</li>
-                        <li>Requirements</li> 
-                        <li>Connectivity</li>
-                        <li>Security</li>
-                        <li>Durability</li>
-                        <li>Information divorced from location</li>
-                        <img src="img/intro.jpg" alt="" />
-                        <li>Geographically distribute the servers</li>
+                        <li>OceanStore employs an update model based on conflict resolution</li>
+                        <li>This reduces number of aborts normally seen in detection-based schemes</li>
+                        <li>Updates can be performed on encrypted data</li>
                     </ul>
                 </div>
 			</div>
+       
+            <div>            
+                <h3><a href="#">Update Format</a></h3>
+                <div>
+                    <ul>
+                        <li>Updates are formatted as a list of predicates associated with actions</li>
+                        <li>A predicate is a TRUE or FALSE statement</li>
+                        <li>To apply an update, a replica evaluates all of the update’s predicates in order</li>
+<li>
+If any predicates are true an update commits, otherwise it aborts
+</li>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div>            
+                <h3><a href="#">Ciphertext</a></h3>
+                <div>
+                    <ul>
+                        <li>The following operations can be applied to ciphertext: replace-block, insert-block, delete-block, and append</li>
+                        <img src="img/update.jpg" alt="" />
+                        <p align="middle">Block insertion on ciphertext</p>
+                    </ul>
+                </div>
+            </div>
+
+
+            <div>            
+                <h3><a href="#">Path of an Update</a></h3>
+                <div>
+                    <ul>
+                        <li>All updates pass through primary and secondary tiers of replicas</li>
+                        <li>The primary tier consists of a small number of replicas in high-bandwidth, high connectivity areas</li>
+                        <li>The secondary tier is organized into multicast trees of replicas</li>
+                        <img src="img/update.jpg" alt="" />
+                    </ul>
+                </div>
+            </div>
 		</div>
+
+
         </div><!--/span-->
       </div><!--/row-->
 

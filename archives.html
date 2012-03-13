@@ -76,7 +76,7 @@
             <ul class="nav nav-list">
 
               <li class="nav-header">Introduction</li>
-              <li class="active"><a href="index.html">Abstract</a></li>
+              <li><a href="index.html">Abstract</a></li>
               <li><a href="goals.html">Goals</a></li>
               <li><a href="system.html">System Overview</a></li>
               <li><a href="applications.html">Applications</a></li>
@@ -87,7 +87,7 @@
               <li><a href="data.html">Data Location and Routing</a></li>
               <li><a href="update.html">Update Model</a></li>
 
-              <li><a href="archives.html">Deep Archival Storage</a></li>
+              <li class="active"><a href="archives.html">Deep Archival Storage</a></li>
               <li><a href="api.html">API</a></li>
 
               <li><a href="introspection.html">Introspection</a></li>
@@ -103,25 +103,34 @@
    
       <div class="span9">
 		<!-- Accordion -->
-		<h2 class="demoHeaders">Abstract</h2>
+		<h2 class="demoHeaders">Deep Archival Storage</h2>
 		<div id="accordion">
 			<div>
-				<h3><a href="#">Purpose</a></h3>
+				<h3><a href="#">Erasure Codes</a></h3>
 				<div>
                     <ul>
-                        <li>Inspiration of technology is to achieve more transparency</li>
-                        <li>Persistent information permits the behavior of devices to be independent of the devices themselves.</li>
-                        <li>Requirements</li> 
-                        <li>Connectivity</li>
-                        <li>Security</li>
-                        <li>Durability</li>
-                        <li>Information divorced from location</li>
-                        <img src="img/intro.jpg" alt="" />
-                        <li>Geographically distribute the servers</li>
+                        <li>The archival mechanism of OceanStore employs erasure codes</li>
+                        <li>Input data is treated as a series of fragments (say n) and is transformed into a greater number of fragments (say 4n)</li>
+                        <li>Any n of the coded fragments are sufficient to construct the original data</li>
+                        <li>If fragments are spread widely, it is very likely the data will be recoverable</li>
                     </ul>
                 </div>
 			</div>
+       
+            <div>            
+                <h3><a href="#">Survivability</a></h3>
+                <div>
+                    <ul>
+                        <li>These procedures maximize survivability of archival copies:</li>
+                        <li>Administrative domains are ranked by their reliability and trustworthiness</li>
+                        <li>Most fragments are not dispersed to locations with a high probability of failure</li>
+                        <li>The number of fragments is determined on a per-object basis</li>
+                    </ul>
+                </div>
+            </div>
 		</div>
+
+
         </div><!--/span-->
       </div><!--/row-->
 

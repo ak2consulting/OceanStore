@@ -76,9 +76,9 @@
             <ul class="nav nav-list">
 
               <li class="nav-header">Introduction</li>
-              <li class="active"><a href="index.html">Abstract</a></li>
+              <li><a href="index.html">Abstract</a></li>
               <li><a href="goals.html">Goals</a></li>
-              <li><a href="system.html">System Overview</a></li>
+              <li class="active"><a href="system.html">System Overview</a></li>
               <li><a href="applications.html">Applications</a></li>
 
               <li class="nav-header">System Architecture</li>
@@ -103,25 +103,37 @@
    
       <div class="span9">
 		<!-- Accordion -->
-		<h2 class="demoHeaders">Abstract</h2>
+		<h2 class="demoHeaders">System Overview</h2>
 		<div id="accordion">
 			<div>
-				<h3><a href="#">Purpose</a></h3>
+				<h3><a href="#">Fundamental Unit</a></h3>
 				<div>
                     <ul>
-                        <li>Inspiration of technology is to achieve more transparency</li>
-                        <li>Persistent information permits the behavior of devices to be independent of the devices themselves.</li>
-                        <li>Requirements</li> 
-                        <li>Connectivity</li>
-                        <li>Security</li>
-                        <li>Durability</li>
-                        <li>Information divorced from location</li>
-                        <img src="img/intro.jpg" alt="" />
-                        <li>Geographically distribute the servers</li>
+                        <li>"Persistent Object"</li>
+                        <li>GUID</li>
+                        <li>Replicated and stored on multiple servers</li>
+                        <li>Probabilistic algorithm to locate</li>
+                        <li>Slower deterministic algorithm</li>
                     </ul>
                 </div>
 			</div>
+       
+            <div>            
+                <h3><a href="#">Updates</a></h3>
+                <div>
+                    <ul>
+                        <li>Versioning</li>
+                        <li>Forms</li>
+                        <ol>
+                        <li>Active</li>
+                        <li>Archival</li>
+                        </ol>
+                    </ul>
+                </div>
+            </div>
 		</div>
+
+
         </div><!--/span-->
       </div><!--/row-->
 
